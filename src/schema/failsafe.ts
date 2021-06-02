@@ -14,6 +14,7 @@ import {Schema} from '../schema';
 
 export = new Schema({
   explicit: [
+    require('../type/exp'),
     require('../type/str'),
     require('../type/seq'),
     require('../type/map')

@@ -1612,7 +1612,14 @@ function composeNode(state:State, parentIndent, nodeContext, allowToSeek, allowC
         throwError(state, 'unacceptable node kind for !<' + state.tag + '> tag; it should be "' + type.kind + '", not "' + state.kind + '"');
       }
 
-      if (!type.resolve(state.result)) { // `state.result` updated in resolver if matched
+      let r = false;
+      try {
+        r = type.resolve(state.result);
+      } catch (e) {
+        throwError(state, e);
+      }
+
+      if (!r) { // `state.result` updated in resolver if matched
         throwError(state, 'cannot resolve a node with !<' + state.tag + '> explicit tag');
       } else {
         state.result = type.construct(state.result);
